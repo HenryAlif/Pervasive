@@ -39,7 +39,7 @@ Format: **[ID]** Keputusan — *Sumber* — Tanggal
 | ID | Keputusan | Sumber | Status |
 |---|---|---|---|
 | D-020 | Font: Plus Jakarta Sans | CONFIRMED — user input | 2026-09-16 |
-| D-021 | Light theme palette (BG `#F4F7FE`, Primary `#4318FF`, Heading `#2B3674`, Body `#A3AED0`) | REF — UI_stitch.md BloomBoost | Perlu validasi user/designer |
+| D-021 | Light theme palette (BG `#F4F7FE`, Surface `#FFFFFF`, Primary `#4318FF`, Heading `#2B3674`, Body `#A3AED0`) | REF — UI_stitch.md BloomBoost | Perlu validasi user/designer |
 | D-022 | Status colors (`#22C55E` / `#F59E0B` / `#EF4444`) | REF — UI_stitch.md + UI_stitch_Gemini.md | Perlu validasi user/designer |
 | D-023 | Dark theme palette (BG `#0F172A`, Surface `#1E293B`, Primary `#818CF8`, Heading `#E2E8F0`, Body `#94A3B8`) | **ASSUMPTION — Claude** | ⚠️ Belum dikonfirmasi — butuh input user/designer |
 | D-024 | Responsive breakpoints (desktop 1280px+, tablet 768–1279px, mobile <768px) | **ASSUMPTION — Claude** | ⚠️ Belum dikonfirmasi — butuh konfirmasi user |
@@ -70,4 +70,5 @@ Format: **[ID]** Keputusan — *Sumber* — Tanggal
 - **CONFIRMED:** Keputusan sudah final, boleh langsung diimplementasikan
 - **REF:** Dari dokumen referensi, perlu validasi sebelum design handoff
 - **ASSUMPTION:** Claude yang memilih — HARUS diganti dengan nilai yang dikonfirmasi sebelum development visual dimulai
+- **DESIGN TBD:** Belum ada keputusan — menunggu Figma design file dari designer. Jangan implementasikan.
 - **Pending (P-xxx):** Belum ada keputusan sama sekali — jangan diimplementasikan

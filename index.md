@@ -140,3 +140,4 @@ Detail lengkap → [Development.md](./Development.md)
 - Nilai threshold per parameter masih nullable — lihat P-002 di DECISIONS.md
 - Template PDF laporan (S-05) belum di-lock — lihat P-001 di DECISIONS.md
 - Data berjalan lokal (SQLite). Tidak ada koneksi ke server eksternal, SCADA, atau ERP.
+- Notifikasi suara/getar: opsional, tidak masuk v1 — tambahkan di v2 jika diperlukan.

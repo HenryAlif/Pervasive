@@ -57,7 +57,7 @@ Dokumen ini ditujukan untuk **UI Designer**. Berisi semua spesifikasi visual yan
 | `text-body` | Plus Jakarta Sans | 16 px | Regular (400) | Konten utama, deskripsi | `[CONFIRMED]` D-020 |
 | `text-caption` | Plus Jakarta Sans | 12–14 px | Regular / Medium (400/500) | Label, timestamp, unit parameter | `[CONFIRMED]` D-020 |
 
-Font fallback: Inter, Roboto, system-ui. `[ASSUMPTION]` D-020 — fallback order belum dikonfirmasi.
+Font fallback: Inter, Roboto, system-ui. `[ASSUMPTION]` — fallback order belum dikonfirmasi (D-020 hanya mengkonfirmasi Plus Jakarta Sans sebagai font utama, bukan fallback-nya).
 
 ### 1.3 Spacing (8-Point Grid)
 
