@@ -1,5 +1,26 @@
 # Index — Application Monitoring Peralatan Industri
 
+**PRD Version:** 0.2 — Prototype Draft
+**Last Updated:** 2026-09-16
+**Status:** In Progress — Design not yet received
+
+---
+
+## Status Marker Legend
+
+Every section in this PRD set uses one of four markers:
+
+| Marker | Meaning |
+|---|---|
+| `[CONFIRMED]` | Explicitly decided by user (Henry) in session |
+| `[REF]` | Derived from reference docs (UI_stitch / UI_stitch_Gemini) — needs user validation before design handoff |
+| `[ASSUMPTION]` | Claude's best-guess fill-in — NOT confirmed, must be validated or replaced before design starts |
+| `[DESIGN TBD]` | Intentionally left blank — requires actual design input (Figma / mockup) before this field can be filled |
+
+**Rule:** Any field marked `[ASSUMPTION]` or `[DESIGN TBD]` in UI_PRD.md is NOT safe to implement until the designer or user provides the real value.
+
+---
+
 ## Deskripsi Produk
 
 Aplikasi web-based berbasis *real-time monitoring* untuk memantau status 6 unit peralatan industri di lantai produksi PT Maju Teknik Industri. Dirancang untuk teknisi lapangan dan supervisor produksi, dengan fokus pada identifikasi cepat status abnormal (< 3 detik).
@@ -64,13 +85,13 @@ Aplikasi web-based berbasis *real-time monitoring* untuk memantau status 6 unit 
 
 ## Ringkasan Design System
 
-- **Layout:** Responsive — desktop 1280px+ / tablet 768–1279px / mobile <768px
-- **Grid:** 12 kolom, margin 16 px, gutter 16 px
-- **Spacing:** 8-point grid (8, 16, 24, 32 px)
-- **Font:** Plus Jakarta Sans
-- **Light theme:** Background `#F4F7FE` · Surface `#FFFFFF` · Primary `#4318FF` · Heading `#2B3674` · Body `#A3AED0`
-- **Dark theme:** Background `#0F172A` · Surface `#1E293B` · Primary `#818CF8` · Heading `#E2E8F0` · Body `#94A3B8`
-- **Status:** Normal `#22C55E` · Peringatan `#F59E0B` · Gangguan `#EF4444`
+- **Layout:** Responsive — desktop 1280px+ / tablet 768–1279px / mobile <768px `[ASSUMPTION]` D-024
+- **Grid:** 12 kolom, margin 16 px, gutter 16 px `[REF]` D-030
+- **Spacing:** 8-point grid (8, 16, 24, 32 px) `[REF]` D-030
+- **Font:** Plus Jakarta Sans `[CONFIRMED]` D-020
+- **Light theme:** Background `#F4F7FE` · Surface `#FFFFFF` · Primary `#4318FF` · Heading `#2B3674` · Body `#A3AED0` `[REF]` D-021
+- **Dark theme:** Background `#0F172A` · Surface `#1E293B` · Primary `#818CF8` · Heading `#E2E8F0` · Body `#94A3B8` `[ASSUMPTION]` D-023
+- **Status:** Normal `#22C55E` · Peringatan `#F59E0B` · Gangguan `#EF4444` `[REF]` D-022
 
 Detail lengkap → [UI_PRD.md](./UI_PRD.md)
 
