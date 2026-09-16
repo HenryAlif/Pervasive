@@ -1,27 +1,30 @@
 # Development — Application Monitoring Peralatan Industri
 
+**Status:** DRAFT — Tech stack confirmed, implementation not started
+**Dependencies:** UI_PRD.md visual specs must be finalized before frontend styling begins
+
 Dokumen ini ditujukan untuk **Developer**. Berisi spesifikasi teknis yang mencerminkan struktur layar dari UI PRD dan kebutuhan fungsional dari User Requirements.
 
 ---
 
 ## 1. Tech Stack
 
-| Layer | Pilihan | Penjelasan Singkat |
-|---|---|---|
-| Frontend | **React JS** | Library UI berbasis komponen, cocok untuk SPA |
-| Styling | **Tailwind CSS** | Utility-first CSS, tulis class langsung di JSX, cepat untuk prototype |
-| State Management | **Zustand** | "Kotak penyimpanan global" untuk React — simpan data mesin, alarm, user di satu tempat dan bisa diakses dari halaman manapun. Lebih simple dari Redux, API minimal |
-| Charting | **Recharts** | Library chart dibangun khusus untuk React. Lebih idiomatis dari Chart.js (yang dibangun untuk vanilla JS) |
-| Backend | **Express.js** | Node.js server minimalis. Cukup beberapa endpoint REST API untuk prototype |
-| Database | **SQLite** (via `better-sqlite3`) | File database lokal, zero setup, tidak perlu install server database |
-| Auth | **JWT** (JSON Web Token) | Token autentikasi stateless — server tidak perlu ingat siapa yang login. Token disimpan di browser, cocok untuk React SPA |
+| Layer | Pilihan | Penjelasan Singkat | D-ID |
+|---|---|---|---|
+| Frontend | **React JS** | Library UI berbasis komponen, cocok untuk SPA | `[CONFIRMED]` D-001 |
+| Styling | **Tailwind CSS** | Utility-first CSS, tulis class langsung di JSX, cepat untuk prototype | `[CONFIRMED]` D-002 |
+| State Management | **Zustand** | "Kotak penyimpanan global" untuk React — simpan data mesin, alarm, user di satu tempat dan bisa diakses dari halaman manapun. Lebih simple dari Redux, API minimal | `[CONFIRMED]` D-003 |
+| Charting | **Recharts** | Library chart dibangun khusus untuk React. Lebih idiomatis dari Chart.js (yang dibangun untuk vanilla JS) | `[CONFIRMED]` D-004 |
+| Backend | **Express.js** | Node.js server minimalis. Cukup beberapa endpoint REST API untuk prototype | `[CONFIRMED]` D-005 |
+| Database | **SQLite** (via `better-sqlite3`) | File database lokal, zero setup, tidak perlu install server database | `[CONFIRMED]` D-006 |
+| Auth | **JWT** (JSON Web Token) | Token autentikasi stateless — server tidak perlu ingat siapa yang login. Token disimpan di browser, cocok untuk React SPA | `[CONFIRMED]` D-007 |
 
 ### Catatan Auth: JWT vs Session-based
 - **JWT (dipilih):** Token digenerate server saat login, dikirim ke browser, disimpan di `localStorage` atau `httpOnly cookie`. Server tidak menyimpan state session. Lebih simple untuk prototype.
 - **Session-based:** Server menyimpan session di memori/Redis, lebih secure untuk production karena token bisa di-invalidate kapan saja. Pertimbangkan upgrade ke ini saat production.
 
 ### Catatan Real-time: Polling vs SSE vs WebSocket
-- **Polling 10 detik (dipilih untuk prototype):** Frontend fetch data setiap 10 detik. Paling simple, tidak butuh setup khusus, tidak ada persistent connection.
+- **Polling 10 detik (dipilih untuk prototype):** `[CONFIRMED]` D-008 Frontend fetch data setiap 10 detik. Paling simple, tidak butuh setup khusus, tidak ada persistent connection.
 - **SSE (Server-Sent Events):** Server push data satu arah ke browser secara real-time. Lebih efisien dari polling, cocok untuk monitoring (data mengalir dari server ke client). Auto-reconnect built-in. Upgrade ke ini setelah prototype stabil.
 - **WebSocket:** Koneksi dua arah (browser ↔ server). Cocok untuk aplikasi kolaboratif / chat. Overkill untuk monitoring yang mayoritas server → client.
 
@@ -68,8 +71,8 @@ Parameter {
   label: string             // "Suhu"
   value: number
   unit: string              // "°C" | "bar" | "mm/s" | "%" | "V" | "m/s"
-  thresholdWarning: number | null   // nullable — sensor belum ditest
-  thresholdFault: number | null     // nullable — sensor belum ditest
+  thresholdWarning: number | null   // [CONFIRMED] nullable — D-006 scope (prototype), P-002 (threshold values pending sensor test)
+  thresholdFault: number | null     // [CONFIRMED] nullable — D-006 scope (prototype), P-002 (threshold values pending sensor test)
 }
 ```
 
