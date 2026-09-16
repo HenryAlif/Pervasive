@@ -1,5 +1,16 @@
 # UI PRD — Application Monitoring Peralatan Industri
 
+**Status:** DRAFT — Visual design not yet received
+**Design Handoff Status:** Pending — sections marked `[DESIGN TBD]` cannot be implemented until Figma/mockup is delivered
+
+> **⚠️ Catatan untuk Designer:**
+> Section 1 (Design Tokens) berisi nilai yang sebagian adalah asumsi Claude (`[ASSUMPTION]`)
+> dan sebagian dari dokumen referensi (`[REF]`). Nilai `[ASSUMPTION]` harus diganti dengan
+> nilai dari Figma design system sebelum development dimulai.
+>
+> Section 3 (Per-Screen Specs) berisi **functional requirements** — apa yang harus ada di
+> setiap screen. Layout dan visual detail ada di Figma (belum tersedia).
+
 Dokumen ini ditujukan untuk **UI Designer**. Berisi semua spesifikasi visual yang dibutuhkan untuk membuat desain yang konsisten dan sesuai standar produk.
 
 ---
@@ -10,65 +21,68 @@ Dokumen ini ditujukan untuk **UI Designer**. Berisi semua spesifikasi visual yan
 
 #### Light Theme
 
-| Token | Hex | Penggunaan |
-|---|---|---|
-| `color-background` | `#F4F7FE` | Latar belakang halaman |
-| `color-surface` | `#FFFFFF` | Latar kartu / panel |
-| `color-primary` | `#4318FF` | Aksen utama, tombol primary, link aktif |
-| `color-text-heading` | `#2B3674` | Teks judul, heading |
-| `color-text-body` | `#A3AED0` | Teks sekunder, label, caption |
+| Token | Hex | Penggunaan | Source |
+|---|---|---|---|
+| `color-background` | `#F4F7FE` | Latar belakang halaman | `[REF]` D-021 |
+| `color-surface` | `#FFFFFF` | Latar kartu / panel | `[REF]` D-021 |
+| `color-primary` | `#4318FF` | Aksen utama, tombol primary, link aktif | `[REF]` D-021 |
+| `color-text-heading` | `#2B3674` | Teks judul, heading | `[REF]` D-021 |
+| `color-text-body` | `#A3AED0` | Teks sekunder, label, caption | `[REF]` D-021 |
 
 #### Dark Theme
 
-| Token | Hex | Penggunaan |
-|---|---|---|
-| `color-background-dark` | `#0F172A` | Latar belakang halaman (dark) |
-| `color-surface-dark` | `#1E293B` | Latar kartu / panel (dark) |
-| `color-primary-dark` | `#818CF8` | Aksen utama (lighter indigo untuk dark bg) |
-| `color-text-heading-dark` | `#E2E8F0` | Teks judul (dark) |
-| `color-text-body-dark` | `#94A3B8` | Teks sekunder (dark) |
+| Token | Hex | Penggunaan | Source |
+|---|---|---|---|
+| `color-background-dark` | `#0F172A` | Latar belakang halaman (dark) | `[ASSUMPTION]` D-023 |
+| `color-surface-dark` | `#1E293B` | Latar kartu / panel (dark) | `[ASSUMPTION]` D-023 |
+| `color-primary-dark` | `#818CF8` | Aksen utama (lighter indigo untuk dark bg) | `[ASSUMPTION]` D-023 |
+| `color-text-heading-dark` | `#E2E8F0` | Teks judul (dark) | `[ASSUMPTION]` D-023 |
+| `color-text-body-dark` | `#94A3B8` | Teks sekunder (dark) | `[ASSUMPTION]` D-023 |
 
 #### Status / Alarm Colors (sama di light dan dark)
 
-| Token | Hex | Penggunaan |
-|---|---|---|
-| `color-status-normal` | `#22C55E` | Status beroperasi / normal |
-| `color-status-warning` | `#F59E0B` | Status peringatan |
-| `color-status-fault` | `#EF4444` | Status gangguan / fault |
+| Token | Hex | Penggunaan | Source |
+|---|---|---|---|
+| `color-status-normal` | `#22C55E` | Status beroperasi / normal | `[REF]` D-022 |
+| `color-status-warning` | `#F59E0B` | Status peringatan | `[REF]` D-022 |
+| `color-status-fault` | `#EF4444` | Status gangguan / fault | `[REF]` D-022 |
 
-**Teks di atas badge status:** putih `#FFFFFF` untuk semua variant (normal, warning, fault). Contrast ratio WCAG AA terpenuhi pada ketiga warna.
+**Teks di atas badge status:** putih `#FFFFFF` untuk semua variant. `[ASSUMPTION]` D-027 — contrast ratio WCAG AA terpenuhi, perlu validasi designer.
 
 ### 1.2 Tipografi
 
-| Token | Font | Size | Weight | Penggunaan |
-|---|---|---|---|---|
-| `text-title` | Plus Jakarta Sans | 24–32 px | Bold (700) | Judul halaman, nama mesin |
-| `text-body` | Plus Jakarta Sans | 16 px | Regular (400) | Konten utama, deskripsi |
-| `text-caption` | Plus Jakarta Sans | 12–14 px | Regular / Medium (400/500) | Label, timestamp, unit parameter |
+| Token | Font | Size | Weight | Penggunaan | Source |
+|---|---|---|---|---|---|
+| `text-title` | Plus Jakarta Sans | 24–32 px | Bold (700) | Judul halaman, nama mesin | `[CONFIRMED]` D-020 |
+| `text-body` | Plus Jakarta Sans | 16 px | Regular (400) | Konten utama, deskripsi | `[CONFIRMED]` D-020 |
+| `text-caption` | Plus Jakarta Sans | 12–14 px | Regular / Medium (400/500) | Label, timestamp, unit parameter | `[CONFIRMED]` D-020 |
 
-Font fallback: Inter, Roboto, system-ui.
+Font fallback: Inter, Roboto, system-ui. `[ASSUMPTION]` — fallback order belum dikonfirmasi.
 
 ### 1.3 Spacing (8-Point Grid)
 
-| Token | Value | Penggunaan |
-|---|---|---|
-| `space-xs` | 8 px | Gap antar elemen dalam kartu |
-| `space-sm` | 16 px | Padding internal kartu, margin grid |
-| `space-md` | 24 px | Jarak antar seksi |
-| `space-lg` | 32 px | Jarak antar kartu / blok besar |
+| Token | Value | Penggunaan | Source |
+|---|---|---|---|
+| `space-xs` | 8 px | Gap antar elemen dalam kartu | `[REF]` D-030 |
+| `space-sm` | 16 px | Padding internal kartu, margin grid | `[REF]` D-030 |
+| `space-md` | 24 px | Jarak antar seksi | `[REF]` D-030 |
+| `space-lg` | 32 px | Jarak antar kartu / blok besar | `[REF]` D-030 |
 
-### 1.4 Layout & Responsive Breakpoints
+### 1.4 Layout & Responsive Breakpoints `[ASSUMPTION]` D-024
+
+> ⚠️ Breakpoints di bawah adalah asumsi standar industri yang dipilih Claude.
+> Harus dikonfirmasi oleh user/designer sebelum CSS ditulis. Lihat D-024 di DECISIONS.md.
 
 Aplikasi ini adalah web app responsive — bukan fixed canvas tablet.
 
-| Breakpoint | Range | Layout Notes |
-|---|---|---|
-| Desktop | 1280px+ | Main target — side nav tetap terbuka |
-| Tablet | 768–1279px | Side nav bisa collapsible |
-| Mobile | <768px | Side nav collapse jadi hamburger menu |
+| Breakpoint | Range | Layout Notes | Source |
+|---|---|---|---|
+| Desktop | 1280px+ | Main target — side nav tetap terbuka | `[ASSUMPTION]` D-024 |
+| Tablet | 768–1279px | Side nav bisa collapsible | `[ASSUMPTION]` D-024 |
+| Mobile | <768px | Side nav collapse jadi hamburger menu | `[ASSUMPTION]` D-024 |
 
-- **Grid:** 12 kolom, margin 16 px, gutter 16 px
-- **Touch target minimum:** 48 × 48 px (semua elemen klikable)
+- **Grid:** 12 kolom, margin 16 px, gutter 16 px `[REF]` D-030
+- **Touch target minimum:** 48 × 48 px `[REF]` D-029
 
 ---
 
@@ -84,6 +98,8 @@ Digunakan di kartu mesin dan header detail peralatan.
 | `Warning` | `#F59E0B` | "Peringatan" | Putih `#FFFFFF` |
 | `Fault` | `#EF4444` | "Gangguan" | Putih `#FFFFFF` |
 
+> Teks di atas semua badge: putih `#FFFFFF`. `[ASSUMPTION]` D-027
+
 - Ukuran: min 48 px tinggi, padding horizontal 12 px
 - Teks: bold, 12–14 px
 
@@ -95,12 +111,14 @@ Digunakan di kartu mesin dan header detail peralatan.
 | `Secondary` | Transparan + border `#4318FF` | `#4318FF` | Aksi sekunder |
 | `Disabled` | `#A3AED0` | Putih | Tombol tidak aktif |
 
-- Tinggi: 48 px
-- Border radius: 8 px (rekomendasi, bisa disesuaikan)
+- Tinggi: 48 px `[REF]` D-029
+- Border radius: 8 px `[ASSUMPTION]` D-028 — ganti dengan nilai dari design system Figma
 
 ### 2.3 Equipment Card (Kartu Mesin)
 
 Digunakan di grid Dashboard — layout **2 kolom × 3 baris** (6 kartu total). Grid harus mudah di-adjust jika jumlah mesin bertambah.
+
+> Grid layout 2 kolom × 3 baris. `[CONFIRMED]` D-025
 
 Elemen dalam satu kartu:
 - **Nama Mesin** (text-title)
@@ -113,8 +131,9 @@ Elemen dalam satu kartu:
 
 ### 2.4 Navigation
 
-**Desktop/Tablet (768px+):** Side Navigation (vertikal di kiri)
-**Mobile (<768px):** Collapse menjadi hamburger menu atau bottom nav
+**Desktop/Tablet (768px+):** Side Navigation (vertikal di kiri) `[ASSUMPTION]` D-026
+**Mobile (<768px):** Collapse menjadi hamburger menu atau bottom nav `[ASSUMPTION]` D-026
+> Konfirmasi preferensi nav sebelum implementasi. Lihat D-026 di DECISIONS.md.
 
 **Nav Items (urutan):**
 1. Dashboard (S-02)
@@ -125,6 +144,15 @@ Elemen dalam satu kartu:
 Touch target per item: min 48 px tinggi.
 
 ---
+
+---
+
+> **Penting:** Section ini berisi **Functional Requirements** — elemen apa saja yang
+> harus ada di setiap layar dan apa fungsinya. Ini BUKAN visual spec.
+>
+> Visual layout, spacing exact, posisi elemen, dan styling akan didefinisikan setelah
+> Figma design diterima. Jangan gunakan section ini sebagai panduan visual tanpa
+> design file dari designer. `[DESIGN TBD]` P-004
 
 ## 3. Spesifikasi Per Layar
 
