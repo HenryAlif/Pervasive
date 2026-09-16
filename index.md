@@ -134,7 +134,9 @@ Detail lengkap → [Development.md](./Development.md)
 
 ## Catatan Lintas-Domain
 
-- Nilai threshold per parameter belum ditentukan (sensor belum ditest). Field threshold nullable sampai ada data real.
-- Template PDF laporan (S-05) belum di-lock — jadwal brainstorm terpisah.
-- Notifikasi suara/getar: opsional, tidak masuk v1.
-- Semua data berjalan lokal. Tidak ada koneksi ke server eksternal, SCADA, atau ERP.
+- Semua keputusan dan sumbernya → [DECISIONS.md](./DECISIONS.md)
+- Item bertanda `[ASSUMPTION]` TIDAK boleh diimplementasikan sebelum dikonfirmasi user/designer
+- Item bertanda `[DESIGN TBD]` menunggu Figma design file — lihat P-004 di DECISIONS.md
+- Nilai threshold per parameter masih nullable — lihat P-002 di DECISIONS.md
+- Template PDF laporan (S-05) belum di-lock — lihat P-001 di DECISIONS.md
+- Data berjalan lokal (SQLite). Tidak ada koneksi ke server eksternal, SCADA, atau ERP.
