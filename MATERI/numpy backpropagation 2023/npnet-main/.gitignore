@@ -1,0 +1,6 @@
+/.idea
+/**/__pycache__
+/src/*.egg-info
+/dist
+/tests/*.pkl
+/.tox
