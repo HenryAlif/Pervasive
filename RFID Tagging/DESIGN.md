@@ -1,59 +1,61 @@
 ---
 version: alpha
-name: Pervasive — Industrial Equipment Monitoring
-description: Tablet-first industrial equipment monitoring system for field technicians and supervisors at PT Maju Teknik Industri. A calm, instrumentation-grade visual language where status color — not brand color — drives visual hierarchy.
+name: Motion — Smart Industrial Asset Tagging
+description: Mobile-first industrial asset tracking system for seat manufacturing plant. RFID automatic detection on jigs (Station 1-12) and pallets (conveyor to warehouse), barcode tracking on finished goods seats. Four internal teams (MES, Maintenance, PPIC, PD) monitor production flow, maintenance status, and asset history in real-time. Bold, high-contrast visual language where status and asset condition drive hierarchy — not decoration.
 colors:
-  primary: "#4318FF"
-  secondary: "#A3AED0"
-  neutral: "#F4F7FE"
+  primary: "#FFF12E"
+  secondary: "#37380D"
+  neutral: "#E6E6E6"
   surface: "#FFFFFF"
-  on-surface: "#2B3674"
-  success: "#22C55E"
-  warning: "#F59E0B"
-  error: "#EF4444"
+  on-surface: "#091B2B"
+  active-jig: "#22C55E"
+  warning-maintenance: "#F59E0B"
+  fault-offline: "#EF4444"
+  dark-bg: "#091B2B"
 typography:
-  headline-display:
-    fontFamily: Plus Jakarta Sans
-    fontSize: 32px
+  display:
+    fontFamily: Nunito
+    fontSize: 28px
     fontWeight: 700
     lineHeight: 1.2
   headline-lg:
-    fontFamily: Plus Jakarta Sans
-    fontSize: 24px
+    fontFamily: Nunito
+    fontSize: 20px
     fontWeight: 700
     lineHeight: 1.25
   headline-md:
-    fontFamily: Plus Jakarta Sans
-    fontSize: 18px
+    fontFamily: Nunito
+    fontSize: 16px
     fontWeight: 600
     lineHeight: 1.3
-  body-md:
-    fontFamily: Plus Jakarta Sans
-    fontSize: 16px
+  body:
+    fontFamily: Nunito
+    fontSize: 14px
     fontWeight: 400
     lineHeight: 1.5
-  body-md-strong:
-    fontFamily: Plus Jakarta Sans
-    fontSize: 16px
+  body-strong:
+    fontFamily: Nunito
+    fontSize: 14px
     fontWeight: 600
     lineHeight: 1.5
-  label-sm:
-    fontFamily: Plus Jakarta Sans
-    fontSize: 13px
+  caption:
+    fontFamily: Nunito
+    fontSize: 12px
     fontWeight: 500
     lineHeight: 1.3
     letterSpacing: 0.01em
 rounded:
-  sm: 8px
-  md: 16px
-  lg: 24px
+  sm: 6px
+  md: 12px
+  lg: 16px
   full: 9999px
 spacing:
-  xs: 8px
-  sm: 16px
-  md: 24px
-  lg: 32px
-  xl: 48px
+  xs: 4px
+  sm: 8px
+  md: 12px
+  lg: 16px
+  xl: 24px
+  xxl: 32px
 components:
   page:
     backgroundColor: "{colors.neutral}"
@@ -61,126 +63,218 @@ components:
     textColor: "{colors.on-surface}"
     typography: "{typography.headline-lg}"
   body-text:
-    textColor: "{colors.secondary}"
-    typography: "{typography.body-md}"
+    textColor: "{colors.on-surface}"
+    typography: "{typography.body}"
   button-primary:
     backgroundColor: "{colors.primary}"
-    textColor: "#FFFFFF"
+    textColor: "{colors.on-surface}"
     rounded: "{rounded.sm}"
-    height: 48px
-    padding: 16px
+    height: 40px
+    padding: "0 16px"
   button-secondary:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.primary}"
+    borderColor: "{colors.primary}"
     rounded: "{rounded.sm}"
-    height: 48px
-    padding: 16px
-  button-disabled:
-    backgroundColor: "{colors.secondary}"
-    textColor: "#FFFFFF"
-    rounded: "{rounded.sm}"
-    height: 48px
-  badge-normal:
-    backgroundColor: "{colors.success}"
+    height: 40px
+    padding: "0 16px"
+  status-active:
+    backgroundColor: "{colors.active-jig}"
     textColor: "#FFFFFF"
     rounded: "{rounded.full}"
-    padding: 12px
-  badge-warning:
-    backgroundColor: "{colors.warning}"
+    padding: "6px 12px"
+  status-warning:
+    backgroundColor: "{colors.warning-maintenance}"
     textColor: "#FFFFFF"
     rounded: "{rounded.full}"
-    padding: 12px
-  badge-fault:
-    backgroundColor: "{colors.error}"
+    padding: "6px 12px"
+  status-fault:
+    backgroundColor: "{colors.fault-offline}"
     textColor: "#FFFFFF"
     rounded: "{rounded.full}"
-    padding: 12px
+    padding: "6px 12px"
   card:
     backgroundColor: "{colors.surface}"
     rounded: "{rounded.md}"
-    padding: 16px
+    padding: "12px"
+    borderColor: "{colors.neutral}"
   input:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.on-surface}"
     rounded: "{rounded.sm}"
-    height: 48px
-    padding: 16px
+    height: 40px
+    padding: "8px 12px"
 ---
 
-# Design System
+# Design System — Motion
 
 ## Overview
 
-Pervasive is a field instrument, not an office dashboard. It runs on a tablet carried by a technician walking a factory floor — often with one hand, often under harsh or uneven lighting. The entire visual system exists to answer one question in under three seconds: *is everything normal, or does something need attention right now?*
+Motion is a **real-time industrial asset tracking system** deployed on mobile devices for a seat manufacturing plant. Three main technologies work together:
 
-The personality is **industrial command center**: calm and quiet when all six machines are healthy, visibly "woken up" the instant something isn't. Think aviation cockpit displays and modern SCADA/HMI software crossed with the typographic discipline of a premium consumer product — never a generic rounded-everything SaaS admin template, never decorative for decoration's sake. Every pixel should justify itself as either data or necessary structure.
+1. **RFID (automatic detection):** Jigs move through production stations 1–12, pallets move on conveyor to warehouse — RFID readers capture data automatically as assets pass. Technician takes no scan action.
+2. **Barcode (manual gun scanner):** Finished seat goods carry barcode for full traceability. Gun scanner sends data to PC; mobile app displays tracking info only (read-only).
+3. **Mobile app:** MES, Maintenance, PPIC, and PD teams monitor dashboard, track barcode info, manage RFID asset registry, view maintenance alerts, and analyze trends — all on-the-go from a phone.
+
+The design system is **bold and high-contrast** — navy-and-gold brand identity (Motion), with a separate semantic color language for asset condition (green = active, amber = needs attention, red = offline/fault). Every screen must answer the core question in under 3 seconds: *What is the status of my jigs, pallets, and production flow right now?*
 
 ## Colors
 
-The palette is a soft blue-gray neutral base with a single disciplined accent, plus three semantic status colors that are the real protagonists of the system.
+### Brand Palette
+- **Primary (`#FFF12E`):** Bold, high-energy gold-yellow. Used for primary CTAs, active states, accent elements. Must pop on dark backgrounds.
+- **Secondary (`#37380D`):** Deep olive. Used for secondary UI and supporting text when primary is too bright.
+- **On-surface (`#091B2B`):** Navy dark. Text, headings, primary foreground — sharp contrast against white surfaces.
+- **Dark BG (`#091B2B`):** Navy. Optional dark theme background (not primary, but mentioned for future expansion).
+- **Neutral (`#E6E6E6`):** Light gray. Page backgrounds, disabled states, subtle dividers.
+- **Surface (`#FFFFFF`):** Pure white. Card, panel, and input backgrounds.
 
-- **Primary (`#4318FF`):** The one brand accent. Used sparingly — primary buttons, active navigation state, links, focus rings. If a screen ever has both the primary accent and a fault badge competing for attention, the fault color must win.
-- **Secondary (`#A3AED0`):** Muted cool gray-blue for secondary text, captions, labels, disabled states, placeholder content.
-- **Neutral (`#F4F7FE`):** Page background. Soft, slightly cool, never stark white — gives surfaces something to sit on top of.
-- **Surface (`#FFFFFF`):** Card and panel backgrounds. Clean white against the neutral page background creates the base elevation layer.
-- **On-surface (`#2B3674`):** Dark navy for headings, titles, and primary text — chosen for strong contrast against both surface and neutral, never pure black.
-- **Success (`#22C55E`):** Operating normally. Quiet in resting state — this color should feel unremarkable when everywhere.
-- **Warning (`#F59E0B`):** Needs attention. Should visually interrupt the calm of the success state.
-- **Error (`#EF4444`):** Fault / critical. The most urgent color in the system — reserved exclusively for genuine fault states, never reused decoratively.
+### Semantic / Status Colors (identical across all themes)
+- **Active (`#22C55E`):** Jig/pallet actively running, production moving, RFID tag detected and online.
+- **Warning (`#F59E0B`):** Maintenance due, attention needed, minor issue detected.
+- **Fault (`#EF4444`):** Offline, RFID not responding, production halted, critical maintenance required.
 
-These three status colors are not just badge fills. They drive card border color, glow intensity, and sort order across the dashboard. A faulted machine should pull the eye before any text is read.
-
-**Dark theme companion palette** (for when a dark variant of this product is generated): background `#0F172A`, surface `#1E293B`, primary `#818CF8` (lightened indigo for dark contrast), heading text `#E2E8F0`, body text `#94A3B8`. The three status colors stay identical in both themes — they are the one piece of the system that must never shift. This dark palette is documented here as design intent only; it is not encoded as formal tokens in this file, since this system targets the light theme as the primary, fully-specified mode.
+These three colors are the protagonists of the system. They drive card borders, status badge fills, and sort order on the dashboard — not decoration, but critical information hierarchy.
 
 ## Typography
 
-**Font family:** Plus Jakarta Sans throughout. Fallback stack: Inter, Roboto, system-ui, sans-serif.
+**Font family:** Nunito throughout. Fallback stack: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif.
 
-Numeric readouts — temperatures, pressures, voltages, machine IDs — should always render with tabular/monospaced figures where the renderer supports it, so columns of numbers stay visually aligned. This is instrumentation; numbers must read like a column of gauges, not like prose.
+Numeric data (RFID IDs, sequence numbers, lot numbers, station numbers, timestamps) — use tabular figures where available so columns align vertically.
 
-- **Headline Display (32px, Bold):** Page-level titles.
-- **Headline Large (24px, Bold):** Card titles, machine names, section headers.
-- **Headline Medium (18px, Semibold):** Sub-section headers, modal titles.
-- **Body (16px, Regular):** Main content, descriptions, table cells.
-- **Body Strong (16px, Semibold):** Emphasized values, key data points.
-- **Label (13px, Medium):** Captions, timestamps, units, table headers.
+- **Display (28px, Bold):** Splash screen branding, page titles.
+- **Headline Large (20px, Bold):** Dashboard title, major section headers, card titles.
+- **Headline Medium (16px, Semibold):** Sub-section headers, modal titles, data labels.
+- **Body (14px, Regular):** Main content, descriptions, table cells, list items.
+- **Body Strong (14px, Semibold):** Emphasized values, asset IDs, key data points.
+- **Caption (12px, Medium):** Timestamps, units, table headers, secondary info.
 
-## Layout
+## Layout & Grid
 
-Primary target is tablet landscape, 1280×800px (also supports 1194×834px). The grid is 12 columns with 16px margins and 16px gutters, built on a strict 8-point spacing scale (8 / 16 / 24 / 32 / 48px).
+**Target device:** Mobile phone, portrait orientation (primary). Secondary support: tablet landscape (follow tablet rules if layout permits).
 
-Side navigation stays persistently open on tablet and desktop (≥768px) — it never collapses at this breakpoint, since a field technician should never have to tap to reveal navigation. Below 768px it becomes a bottom navigation bar rather than a hamburger menu, for the same one-tap-access reason.
+**Mobile grid:** 4 columns (narrow screens), 8-point spacing scale (4, 8, 12, 16, 24, 32px). Safe area margins: 12px left/right.
 
-Every interactive element has a minimum touch target of 48×48px — this is a glove-friendly interface used while walking, not a precision-pointer desktop UI.
+**Primary screen dimensions:** 360×800px (base case — responsive up to 480px width). Assume small screen, gloved fingers, reading in harsh factory lighting.
+
+Every interactive element: **minimum 40px height** (touch target). No tiny buttons.
 
 ## Elevation & Depth
 
-Depth in the resting state is soft and quiet: low-opacity, diffuse shadows lift cards gently off the neutral background — no hard drop shadows, no heavy skeuomorphism.
+**Resting state (normal operation):** Soft, subtle shadows on cards — barely perceptible lift against the neutral background. No decoration.
 
-Urgency is communicated differently from ordinary elevation. A card in **Fault** state gets a colored border (and a very subtle glow in the same hue) in addition to its normal elevation — it should visibly "light up" rather than simply sit higher. **Warning** state gets the same treatment, less intense, in amber. **Normal** state cards stay visually quiet: thin neutral border, standard soft shadow, no color bleed. This is the single most important depth rule in the system — elevation here is a signal of health, not just a decorative affordance.
+**Asset state signals depth differently:**
+- **Active (green):** Thin green left-border on card, optional subtle glow. Feels calm, confident, "everything is fine."
+- **Warning (amber):** Thin amber left-border, slightly more visible shadow. Draws attention gently.
+- **Fault (red):** Bold red left-border + noticeable colored shadow/glow. Must visibly stand out — production is stopped or at risk.
+
+This is the single most important depth rule: **elevation communicates asset health, not just affordance.**
 
 ## Shapes
 
-A consistent, disciplined corner-radius scale: 8px for buttons and inputs, 16px for cards, 24px for modals, fully rounded (pill) for status badges. Radius is never mixed arbitrarily within the same view — pick the right scale level for the component type and hold it everywhere that component type appears.
+**Corner radius scale (consistent everywhere):**
+- `sm` 6px: buttons, inputs, small badges
+- `md` 12px: cards, standard components
+- `lg` 16px: modals, large containers
+- `full` 9999px: status badges (pills)
+
+Never mix radii arbitrarily within a view. Consistency builds polish.
 
 ## Components
 
-- **Buttons:** Primary fills with the accent color and white text; secondary is a white/surface fill with accent-colored text and border; disabled uses the muted secondary color at reduced emphasis. Always labeled — never icon-only for a primary action, since field users need certainty, not interpretation. 48px height minimum.
-- **Status Badge:** Flat, pill-shaped, color-filled (never gradient or outline-only), bold white label text. This is the atomic unit of "at a glance" status communication and appears identically whether inline in a table, on an equipment card, or large-format in a detail-screen header.
-- **Equipment Card:** Machine name, ID, status badge, 2–3 key parameter values in tabular alignment, and a small sparkline trend. Cards auto-sort by urgency — fault first, then warning, then normal — and the fault/warning hierarchy from "Elevation & Depth" applies directly to this component. This is the component the entire dashboard is built around.
-- **Navigation:** Persistent side rail with icon + label (never icon-only) on tablet/desktop; bottom bar on mobile. Role-gated items (e.g. supervisor-only sections) are simply absent for other roles, never shown disabled.
-- **Data Table:** Muted, semibold header row with a thin bottom border; minimum 56px row height for comfortable tap targets; status/severity values always render as the Status Badge component, never as plain colored text.
-- **Gauge / Value Card:** Large tabular numeric value with its unit as a label, paired with a circular or horizontal gauge arc colored by current health status (not the brand accent) so the gauge itself communicates condition at a glance.
+### Status Badge (Jig / Pallet / Seat Condition)
+- Pill-shaped, flat color fill (never gradient).
+- Text: white, bold, 12-14px.
+- Labels: "Aktif", "Perlu Perhatian", "Offline" (or English equivalents).
+- Height: 28px for inline/table use, 36px for header-level display.
+- Padding: 6–12px horizontal.
+- These badges appear on dashboard cards, detail screens, alert rows — always consistent styling.
+
+### Button
+| Variant | Background | Text | Border | Usage |
+|---|---|---|---|---|
+| Primary | `#FFF12E` (gold) | `#091B2B` (navy) | None | Main CTA ("Scan", "Update", "Submit") |
+| Secondary | `#FFFFFF` (white) | `#FFF12E` (gold) | 1px gold | Secondary actions, cancel |
+| Disabled | `#E6E6E6` (gray) | `#FFFFFF` | None | Inactive state |
+
+- Height: 40px minimum.
+- Corner radius: 6px.
+- Label: always visible text, never icon-only on primary actions.
+
+### Jig / Pallet Status Card
+Displayed on Dashboard in a scrollable list or grid. Each card shows:
+- **Asset ID** (RFID ID, large tabular font) — e.g., "JIG-0847" or "PLT-123"
+- **Current location/station** (for jigs) or **current position** (for pallets) — e.g., "Station 05" or "Conveyor Segment 02"
+- **Status badge** — Active/Warning/Fault
+- **Sequence number** (if applicable) — e.g., "Seq: 542"
+- **Last detected** timestamp — e.g., "09:34:22"
+- **Left border accent** — color matches status (green/amber/red)
+
+Card height: 80–100px. Tap opens detail screen.
+
+### RFID Tag Registry Row (Manage RFID screen)
+For CRUD operations. Each row shows:
+- **RFID ID** (editable text field)
+- **Asset type** (Jig / Pallet, dropdown)
+- **Asset name** (editable text field)
+- **Status** (display-only badge, pulled from current tag detection)
+- **Action buttons** — Edit (pencil icon) · Delete (trash icon)
+
+Tappable row for full-screen detail / edit modal.
+
+### Barcode Info Card (Barcode Scan screen)
+Displays read-only tracking information from scanned barcode:
+- **Sequence** (tabular font)
+- **Product Code**
+- **Part Number**
+- **Lot Number**
+- **Datetime** of barcode assignment
+- Optional: **QR/barcode image** thumbnail if stored in database
+
+Background: subtle gray tint to show this is "read-only, informational" vs. editable input.
+
+### Alert Item (Alerts screen)
+Each alert row contains:
+- **Alert icon** (warning triangle or alert symbol, color-coded)
+- **Alert title** — e.g., "JIG-0847 Maintenance Overdue"
+- **Alert timestamp**
+- **Severity badge** (Warning / Fault)
+- **Dismiss or detail button** (arrow icon)
+
+Tap opens alert detail / dismissal flow.
+
+### Analytics Chart Widget
+Simple bar or line chart showing:
+- **X-axis:** Time (months or weeks)
+- **Y-axis:** Alert count (or breakdown: jigs vs. pallets)
+- **Color coding:** amber for warnings, red for faults, neutral for normal
+- **Touch interaction:** optional tap-to-show-details, no complex hover states (mobile)
+
+Keep visual simple — data density over animation.
 
 ## Do's and Don'ts
 
-- Do let status color drive hierarchy — border glow and sort order, not just a small badge in a corner.
-- Do keep the resting (all-normal) state visually quiet — plenty of soft neutral space, no competing color noise.
-- Do use tabular/aligned numeric figures everywhere a measurement appears.
-- Do keep the primary accent color reserved for actions and active states only — never let it compete with a status color.
-- Do maintain a consistent corner-radius scale; never mix rounded and sharp corners in the same view.
-- Do keep every primary action labeled with text, never icon-only.
-- Don't use illustrations, mascots, pastel gradient blobs, or any "friendly SaaS" decorative language — this is a precision instrument, not a marketing surface.
-- Don't use low-contrast gray-on-gray text; it fails the glance-test under harsh factory lighting.
-- Don't apply decorative gradients to cards or buttons.
-- **Accepted exception:** the three status badges (success/warning/error backgrounds with white text) do not individually clear the strict WCAG AA 4.5:1 text-contrast ratio at their exact hex values — this is intentional. These are the three CONFIRMED brand status colors for this product and are never substituted. Legibility is instead carried by bold weight, large pill size, color redundancy with the adjacent text label (e.g. "Beroperasi" / "Peringatan" / "Gangguan"), and consistent placement — not by raw text contrast alone.
+**Do:**
+- Let asset status (green/amber/red) drive visual hierarchy — border color, glow, sort order.
+- Keep the resting (all-green) state calm and quiet — soft background, plenty of white space.
+- Use tabular/aligned numeric figures everywhere an ID, sequence, or timestamp appears.
+- Keep primary actions (buttons) clearly labeled with text — field teams need certainty, not guessing.
+- Maintain the corner-radius scale consistently across all components.
+- Use the gold-yellow accent for CTAs and active states; let it pop on dark/neutral backgrounds.
+
+**Don't:**
+- Decorate with illustrations, gradients-for-decoration, or "friendly SaaS" pastels.
+- Create low-contrast gray-on-gray text — this app is read under factory lighting, not office lighting.
+- Mix rounded and sharp corners in the same view.
+- Use decorative gradients on buttons or cards.
+- Hide primary navigation — all nav items should be visible (side rail on tablet, bottom bar on mobile).
+- Rely on color alone for meaning — always pair status color with text label or icon.
+
+**Accepted caveat:** The three status badges (green/amber/red with white text) do not individually exceed WCAG AA 4.5:1 text contrast at their exact hex values — this is intentional. These are the CONFIRMED brand status colors and are never substituted. Legibility is carried by: bold weight (600+), large pill size (28–36px), color redundancy with adjacent text label ("Aktif" / "Perlu Perhatian" / "Offline"), and consistent placement.
+
+## Component Interactions
+
+- **Tap status badge** (on dashboard card): Opens detail screen for that jig/pallet.
+- **Tap card row**: Depends on screen — may open detail, edit modal, or focus view.
+- **Long-press**: Reserved for future multi-select on Manage RFID screen.
+- **Swipe**: Not primary — avoid due to accidental triggers in factory setting.
+- **Buttons**: Standard tap, visual feedback on press (opacity change or slight scale), haptic feedback optional.
