@@ -184,7 +184,7 @@ Never mix radii arbitrarily within a view. Consistency builds polish.
 ### Status Badge (Jig / Pallet / Seat Condition)
 - Pill-shaped, flat color fill (never gradient).
 - Text: white, bold, 12-14px.
-- Labels: "Aktif", "Perlu Perhatian", "Offline" (or English equivalents).
+- Labels: "Active", "Attention Required", "Offline".
 - Height: 28px for inline/table use, 36px for header-level display.
 - Padding: 6–12px horizontal.
 - These badges appear on dashboard cards, detail screens, alert rows — always consistent styling.
@@ -269,7 +269,7 @@ Keep visual simple — data density over animation.
 - Hide primary navigation — all nav items should be visible (side rail on tablet, bottom bar on mobile).
 - Rely on color alone for meaning — always pair status color with text label or icon.
 
-**Accepted caveat:** The three status badges (green/amber/red with white text) do not individually exceed WCAG AA 4.5:1 text contrast at their exact hex values — this is intentional. These are the CONFIRMED brand status colors and are never substituted. Legibility is carried by: bold weight (600+), large pill size (28–36px), color redundancy with adjacent text label ("Aktif" / "Perlu Perhatian" / "Offline"), and consistent placement.
+**Accepted caveat:** The three status badges (green/amber/red with white text) do not individually exceed WCAG AA 4.5:1 text contrast at their exact hex values — this is intentional. These are the CONFIRMED brand status colors and are never substituted. Legibility is carried by: bold weight (600+), large pill size (28–36px), color redundancy with adjacent text label ("Active" / "Attention Required" / "Offline"), and consistent placement.
 
 ## Component Interactions
 

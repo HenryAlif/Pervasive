@@ -80,10 +80,10 @@ Think **industrial control dashboard**, not office SaaS. The reference is modern
 
 ### 3.2 Color — Semantic / Status (identical across light and dark themes)
 
-| Token | Hex | Meaning | Label (Indonesian) |
+| Token | Hex | Meaning | Label |
 |---|---|---|---|
-| `color-status-active` | `#22C55E` | Jig/pallet actively running, RFID detected, production moving | "Aktif" |
-| `color-status-warning` | `#F59E0B` | Needs attention, maintenance due, minor alert | "Perlu Perhatian" |
+| `color-status-active` | `#22C55E` | Jig/pallet actively running, RFID detected, production moving | "Active" |
+| `color-status-warning` | `#F59E0B` | Needs attention, maintenance due, minor alert | "Attention Required" |
 | `color-status-fault` | `#EF4444` | Offline, RFID not responding, production halted, critical | "Offline" |
 
 **Text on any status badge is always white (`#FFFFFF`), bold weight, for high contrast regardless of background.**
@@ -133,7 +133,7 @@ Think **industrial control dashboard**, not office SaaS. The reference is modern
 A **pill-shaped label** showing jig, pallet, or production status at a glance.
 
 - **Background:** Status color (`#22C55E` / `#F59E0B` / `#EF4444`).
-- **Text:** White, bold, 12–14px, centered. Labels: "Aktif" / "Perlu Perhatian" / "Offline".
+- **Text:** White, bold, 12–14px, centered. Labels: "Active" / "Attention Required" / "Offline".
 - **Height:** 28px for inline use (list rows, table cells), 36px for header-level display (detail screen top).
 - **Padding:** 6–12px horizontal.
 - **No border, no gradient** — flat, confident color fill.
@@ -158,7 +158,7 @@ Displayed on **Dashboard** in a scrollable vertical list.
 **Contents:**
 1. **RFID ID** — Large, tabular font (e.g., "JIG-0847" or "PLT-123"). Left-aligned, bold.
 2. **Location/Position** — e.g., "Station 05" (for jigs) or "Conveyor Seg 2" (for pallets). Secondary text color, smaller font.
-3. **Status Badge** — Positioned top-right of card. "Aktif" / "Perlu Perhatian" / "Offline".
+3. **Status Badge** — Positioned top-right of card. "Active" / "Attention Required" / "Offline".
 4. **Key data row** — Sequence and last-detected timestamp (tabular font). E.g., "Seq: 542 | 09:34:22".
 5. **Left border accent** — Full height, 3–4px, color-matched to status (green/amber/red).
 
@@ -175,7 +175,7 @@ Each row represents one tag entry (jig or pallet). Structure for CRUD operations
 | RFID ID | `JIG-xxxx` or `PLT-xxxx` | Yes, in edit mode | Tabular font for alignment |
 | Asset Type | Jig / Pallet | Yes, dropdown | Display as badge or tag |
 | Asset Name | Custom name (optional) | Yes | Editable text field |
-| Status | Badge (Aktif/Perlu Perhatian/Offline) | No, display-only | Pulled from current RFID detection |
+| Status | Badge (Active/Attention Required/Offline) | No, display-only | Pulled from current RFID detection |
 | Actions | Edit · Delete | Yes | Icon buttons (pencil, trash) |
 
 Tap row to open full-screen detail / edit modal. Swipe-to-delete optional (depends on UX validation).
@@ -204,7 +204,7 @@ Each alert row conveys urgency and actionability.
 1. **Alert icon** — Warning triangle or alert symbol, color-coded (amber or red).
 2. **Alert title** — e.g., "JIG-0847 Maintenance Overdue" or "PLT-456 RFID Offline".
 3. **Timestamp** — When alert was triggered (e.g., "09:34" or "2 hours ago").
-4. **Severity badge** — "Perlu Perhatian" or "Offline" (status badge pattern).
+4. **Severity badge** — "Attention Required" or "Offline" (status badge pattern).
 5. **Action button** — Arrow (→) or "View" to open detail / dismissal flow.
 
 Minimum row height: 56px (touch-friendly). Tap anywhere on row opens detail.
@@ -246,16 +246,16 @@ Simple, clean data visualization showing alert trends over time.
 
 **Elements:**
 - Motion logo / branding at top of card.
-- **User ID input field** (48px min height). Placeholder: "Masukkan User ID" (e.g., MES-001, MAINT-05).
+- **User ID input field** (48px min height). Placeholder: "Enter User ID" (e.g., MES-001, MAINT-05).
 - **Password input field** (48px min height, show/hide toggle icon).
-- **Checkbox:** "Ingat Saya" (Remember Me) — optional, for returning users on shared tablets.
-- **Text link:** "Lupa Password?" (Forgot Password) — right-aligned below password field.
-- **Primary button:** "Masuk" (Login), 48px height, full-card width (minus padding).
+- **Checkbox:** "Remember Me" — optional, for returning users on shared tablets.
+- **Text link:** "Forgot Password?" — right-aligned below password field.
+- **Primary button:** "Login", 48px height, full-card width (minus padding).
 
 **States to design:**
 - Default (empty fields).
 - Filled (valid input, button active, gold color).
-- Error (wrong ID/password) — red error message beneath field, input border turns fault-red.
+- Error (wrong credentials) — red error message beneath field, input border turns fault-red.
 - Loading (authenticating) — button shows spinner, label dims, disabled state.
 
 ---
@@ -277,8 +277,8 @@ Simple, clean data visualization showing alert trends over time.
    Each tile is a small card (touch target 40px+ min) showing the count prominently with a label.
 
 3. **Status summary bar** — Optional; shows count of assets by status:
-   - 🟢 **Aktif:** n
-   - 🟡 **Perlu Perhatian:** n
+   - 🟢 **Active:** n
+   - 🟡 **Attention Required:** n
    - 🔴 **Offline:** n
    
    Or use badge pills inline.
@@ -304,7 +304,7 @@ Simple, clean data visualization showing alert trends over time.
 1. **Top bar** — Title "Barcode Scan" and a "Clear" button to reset.
 
 2. **Barcode input / search field** (or camera integration if app supports it):
-   - Placeholder: "Scan barcode atau cari sequence..."
+   - Placeholder: "Scan barcode or search sequence..."
    - Button: "Scan" (camera icon) or input field auto-triggers camera on focus.
    - Clear button (×) inside field.
 
@@ -357,16 +357,16 @@ Simple, clean data visualization showing alert trends over time.
 
 2. **Filter tabs**:
    - All
-   - Perlu Perhatian (warnings)
+   - Attention Required (warnings)
    - Offline (faults)
 
-3. **Alert list** — Scrollable list of Alert Items (§4.6), sorted by severity (Offline first, then Perlu Perhatian):
+3. **Alert list** — Scrollable list of Alert Items (§4.6), sorted by severity (Offline first, then Attention Required):
    - Icon · Title · Timestamp · Badge · Action (→)
    - Tap to open alert detail.
 
 4. **Empty state** (if no alerts):
-   - "Tidak ada alert" (No alerts)
-   - ✓ Semua sistem berjalan normal (All systems running normally)
+   - "No Alerts"
+   - ✓ All systems running normally
 
 ---
 
@@ -385,11 +385,11 @@ Simple, clean data visualization showing alert trends over time.
 
 3. **Main chart** — Analytics Chart Widget (§4.7):
    - Bar or line chart showing alert count by week or month.
-   - Breakdown by alert type (Perlu Perhatian / Offline) or asset type (Jig vs. Pallet).
+   - Breakdown by alert type (Attention Required / Offline) or asset type (Jig vs. Pallet).
    - Color-coded bars (amber/red).
 
 4. **Data table** (optional, below chart):
-   - Columns: Period · Perlu Perhatian Count · Offline Count
+   - Columns: Period · Attention Required Count · Offline Count
    - Rows: weekly or monthly breakdown
    - Sortable by column.
 
@@ -402,7 +402,7 @@ Simple, clean data visualization showing alert trends over time.
      │ (auto-advance after 2–3s)
      ▼
 [S-02 Login]
-     │ (tap "Masuk", success)
+     │ (tap "Login", success)
      ▼
 [S-03 Dashboard] ◄─────────────┐
      │                         │
@@ -451,7 +451,7 @@ Simple, clean data visualization showing alert trends over time.
 - **Jig / Pallet card tap:** Loads asset detail (future enhancement; for prototype, can be a modal overlay showing full tag history).
 - **Status badge color:** Drives urgency perception; no additional animation needed (factory lighting is harsh enough).
 - **Button press:** Visual feedback via slight opacity change or scale; haptic feedback optional but nice-to-have.
-- **Empty states:** Show relevant icon + message (e.g., "Tidak ada alert" when Alerts screen is empty).
+- **Empty states:** Show relevant icon + message (e.g., "No Alerts" when Alerts screen is empty).
 - **Refresh button:** Manual sync with database, shows brief loading spinner.
 - **Add/Edit modal:** Overlay on previous screen, with semi-transparent backdrop. On dismiss, returns to list view.
 
