@@ -1,0 +1,468 @@
+================================================================================
+MOTION — SMART INDUSTRIAL ASSET TAGGING
+Functional Concept & Screen Purpose Documentation
+================================================================================
+
+Seat Manufacturer RFID/Barcode Tracking System
+For: UbiComp Assignment — Design and Prototype of Smart Industrial Tagging App
+Generated: 2026-10-22
+
+================================================================================
+PART 1: FUNCTIONAL CONCEPT (5 Required Points)
+================================================================================
+
+1. TAGGING TECHNOLOGY USED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Motion employs TWO distinct tagging technologies, each optimized for its specific
+asset type and operational pattern:
+
+RFID (Radio Frequency Identification) — Passive Tags:
+  • Used for: Production Jigs (Station 1–12 Assembly Line) & Transport Pallets
+    (Conveyor to Warehouse)
+  • Tag Type: Passive RFID tags (no battery; powered by reader's RF field)
+  • Read Method: AUTOMATIC, via fixed RFID readers placed at strategic points
+    (assembly line stations, conveyor entry/exit)
+  • Trigger: No human action required. Tags are read automatically when the
+    asset passes within reader range
+  • Frequency: Typically 860–960 MHz (UHF band for longer read range ~4–5 meters)
+  • Why this choice: Jigs and pallets are recurring assets that follow fixed
+    paths. Automatic detection requires zero operator interaction, reducing error
+    and enabling seamless, real-time tracking as production flows
+
+Barcode (1D/2D Linear/QR Codes) — Passive Labels:
+  • Used for: Finished Seat Goods (completed products)
+  • Read Method: MANUAL, via handheld gun scanner (held by operator, pressed to
+    label to trigger laser/imager read)
+  • Trigger: Operator must deliberately scan each seat's barcode
+  • Format: 1D barcode or 2D QR code printed on each finished seat's shipping label
+  • Why this choice: Finished seats are one-time products flowing outbound once.
+    Unlike reusable jigs, they don't need automated ambient detection. Barcode is
+    ideal for point-of-scan traceability: operator confirms "this seat, at this
+    moment, has this product code, lot number, date"—full provenance in one scan
+
+Key Insight: Two technologies serve the two-tier system:
+  • RFID = Passive, continuous monitoring of reusable production equipment
+    (pervasive, background sensing)
+  • Barcode = Active, on-demand traceability of products (explicit act of
+    confirmation)
+
+
+2. DATA FLOW DIAGRAM (System Flow)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TWO PARALLEL DATA PATHS:
+
+PATH A: RFID (Automatic, Production Equipment)
+─────────────────────────────────────────────
+  Physical Flow:
+    Jig/Pallet moves through Assembly Line (Station 1 → 12) or on Conveyor
+    system toward Warehouse
+
+  Data Flow:
+    [Jig/Pallet + RFID Tag]
+         ↓ (passes reader range automatically)
+    [Fixed RFID Reader] — detects tag ID, reads sensor data, records timestamp
+         ↓ (connects via Ethernet or wireless)
+    [PC/Industrial Computer] — validates data, formats payload
+         ↓ (stores or streams)
+    [Database (PC Local or Remote)] — stores Jig/Pallet movement records
+         ↓ (query on demand or stream to app)
+    [Mobile App (Dashboard, Alerts, Analytics)]
+         ↓ (user views: asset status, location, maintenance due)
+    [4 Teams: MES, Maintenance, PPIC, PD]
+
+  Payload per Read (stored in Database):
+    - RFID Jig ID (e.g., JIG-0847)
+    - Station Number (e.g., 05) OR Conveyor Segment
+    - Sequence Number (production batch identifier)
+    - Datetime (YYYY-MM-DD HH:MM:SS)
+
+  Frequency: Continuous, automated — every jig/pallet triggers a read as it
+  passes each reader (5–20 reads per jig per production cycle, depending on
+  number of readers)
+
+  Key Property: NO MANUAL ACTION. Data flows push-based (reader initiates) and
+  automatic (operator unaware).
+
+
+PATH B: Barcode (Manual, Finished Goods)
+──────────────────────────────────────────
+  Physical Flow:
+    Finished Seat passes through shipping/QC station. Operator holds Seat +
+    Gun Scanner.
+
+  Data Flow:
+    [Finished Seat + Barcode Label]
+         ↓ (operator points gun scanner, pulls trigger)
+    [Handheld Gun Scanner] — optical read, decodes barcode payload
+         ↓ (via USB or wireless to PC)
+    [PC/Warehouse Terminal] — receives barcode data, validates, formats
+         ↓ (stores)
+    [Database]
+         ↓ (query on demand or synced to app)
+    [Mobile App (Barcode Scan Screen, read-only tracking)]
+         ↓ (user views: sequence, product code, part number, lot, datetime)
+    [4 Teams — primarily PPIC & PD for traceability/analytics]
+
+  Payload per Scan (stored in Database):
+    - Sequence Number (unique production sequence)
+    - Product Code (e.g., SEAT-XYZ-2026-10-22)
+    - Part Number (component ID)
+    - Lot Number (batch/shift identifier)
+    - Datetime (YYYY-MM-DD HH:MM:SS of scan)
+
+  Frequency: Event-driven — exactly once per seat (or once per scan if re-scanned)
+
+  Key Property: MANUAL ACTION REQUIRED. Data flows pull-based (operator initiates
+  scan) and explicit (operator confirms "I scanned this specific seat").
+
+
+CRITICAL DIFFERENCE:
+  RFID: Background, passive, continuous, ambient awareness — system watches
+        without anyone's deliberate act
+  Barcode: Foreground, active, event-driven, explicit confirmation — operator
+           must choose to capture data
+
+
+3. USER ROLES AND INTERACTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Four Internal Teams Access Motion:
+
+MES TEAM (Manufacturing Execution System)
+  Role: Monitor real-time production flow across Assembly Line Stations 1–12
+        and conveyor to warehouse
+  Primary Need: "Where are jigs/pallets right now? Are they moving as scheduled?"
+  Interactions:
+    • View Dashboard: see active jigs at each station, pallets in transit
+    • Monitor Alerts: catch jigs stuck at a station (exceeded time threshold) or
+      RFID reader failures (offline status)
+    • Analytics: analyze bottlenecks (e.g., which station delays most often)
+
+Maintenance Team
+  Role: Proactive & reactive maintenance on jigs and pallets
+  Primary Need: "Which jigs/pallets are due for maintenance? Which have failed
+                recently?"
+  Interactions:
+    • View Alerts: maintenance-due alerts (e.g., "JIG-0847 overdue for
+      lubrication")
+    • View Dashboard: jigs tagged with "Attention Required" or "Offline" status
+    • Manage RFID: register newly serviced jigs, update tag associations
+    • Analytics: identify which jigs/pallets fail most frequently (leading
+      candidates for redesign or upgrade)
+
+PPIC TEAM (Production Planning and Inventory Control)
+  Role: Plan production schedules, track seat goods, control inventory
+  Primary Need: "Can I trace this finished seat? What batch is it from? Where
+                will it go next?"
+  Interactions:
+    • Barcode Scan Screen: scan finished seats to capture sequence, product code,
+      lot, datetime for shipping/inventory
+    • Dashboard: overview of production rate (jigs moving through stations)
+    • Analytics: historical trace of how many seats completed per hour/day/week
+
+PD TEAM (Product Development, Support)
+  Role: Support operations, analyze trends, optimize system
+  Primary Need: "What's the big picture? How efficient is this line? What can we
+                improve?"
+  Interactions:
+    • Dashboard: high-level view of system health (total jigs, in-maintenance,
+      offline)
+    • Analytics: detailed trend analysis—alert frequency, mean-time-between-failure
+      (MTBF), production throughput
+    • Alerts: escalation/summary view of critical issues
+
+ACCESS MODEL: NO ROLE-BASED HIDING
+  All four teams see all seven screens (Splash, Login, Dashboard, Barcode Scan,
+  Manage RFID, Alerts, Analytics). The system does NOT hide Alerts from MES or
+  Barcode Scan from Maintenance. Instead, each team focuses on the data most
+  relevant to them, but the option to explore other screens is always available.
+  Login differentiates user identity only for audit trail and notification routing,
+  not for permission boundaries.
+
+COMMON INTERACTION FLOW:
+  1. Open Motion app on mobile (or tablet)
+  2. Login with User ID (e.g., MES-001, MAINT-05, PPIC-team, PD-support)
+  3. Land on Dashboard → rapid health check
+  4. If issues spotted → drill into Alerts, Detail view, or Manage RFID
+  5. If tracking needed → Barcode Scan or Analytics
+
+
+4. PERVASIVE COMPUTING ELEMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Motion embodies pervasive computing (ubiquitous computing) through AMBIENT SENSING
+and CONTEXT-AWARE OPERATIONS:
+
+Ambient Sensing (RFID Passive Detection):
+  • Jigs moving through assembly line → RFID readers continuously monitor without
+    operator awareness
+  • Data collection happens in the background: no app opened, no button pressed,
+    no conscious user action
+  • The system "watches the environment" — location tracking emerges from
+    infrastructure, not from explicit data entry
+  • This is the essence of "pervasive": computing is embedded into the physical
+    production environment, not confined to a device
+
+Context-Awareness:
+  • System always knows: What jig is where, when did it arrive, what's the next
+    station
+  • Users don't query "where is JIG-0847?" — the system already knows and
+    proactively alerts if it's overdue (e.g., "JIG-0847 stuck at Station 07 for
+    15 min")
+  • Alerts are triggered by implicit rules (timeout thresholds, movement anomalies)
+    without explicit user search
+
+Mobile App as an Interface to Embedded Sensing:
+  • The core computation (tracking, alerting, trend analysis) happens via RFID
+    infrastructure in the production line
+  • The mobile app is NOT the source of data — it's a window into that embedded
+    computation
+  • Users access the app from anywhere in the plant (assembly line, warehouse,
+    office) and get immediate view of real-time state
+
+Why This Matters (Pervasive Computing):
+  Traditional systems: Worker carries clipboard, writes down jig ID and time
+                       → manual, error-prone, time-delayed
+  Motion (Pervasive): RFID reader detects jig automatically → system records
+                      → app notifies → worker responds
+  The computing "disappears" into the environment; users interact with results,
+  not mechanics.
+
+Ubiquitous Identification (Tagging):
+  Each jig/pallet has a persistent RFID identity. That identity is recognized
+  automatically wherever a reader is installed. Crucially, this is NOT limited
+  to "during production" — if a jig moves to a maintenance bay with a reader,
+  it's still recognized. This enables the "seamless tracking across locations"
+  that defines pervasive systems.
+
+
+5. INTEGRATION POSSIBILITIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Motion is architected to integrate with adjacent systems and future extensions:
+
+MES/ERP Integration:
+  • Motion can sync jig/pallet status to existing Manufacturing Execution System
+    (MES) or Enterprise Resource Planning (ERP)
+  • Example: When a jig completes Station 12, Motion auto-sends completion event
+    to ERP → ERP schedules next production task
+  • Benefit: Eliminates double-entry; real-time production visibility in corporate
+    reporting
+
+IoT Sensor Integration:
+  • Future: Attach temperature/vibration/pressure sensors to jigs
+  • RFID readers could also collect sensor telemetry alongside tag ID
+  • Enables predictive maintenance: "Jig-0847 vibration trending upward →
+    schedule bearing replacement before failure"
+  • Example: integrate vibration data → ML model predicts MTBF → trigger
+    maintenance alert
+
+Cloud Backend & Multi-Location Access:
+  • Current: RFID readers → Local PC → Local database → Mobile app (on same
+    local network)
+  • Future: Cloud sync (Firebase, AWS, Azure) → all plants worldwide see unified
+    dashboard
+  • Enables central Maintenance team (HQ) to support multiple manufacturing sites
+
+Barcode Integration with Existing Production Lines:
+  • Many seat factories already have barcode printers, gun scanners, and barcode
+    databases
+  • Motion can plug into that existing barcode workflow: gun scanner sends data to
+    Motion database, app retrieves tracing info
+  • Benefit: No need for separate barcode infrastructure — motion leverages what's
+    already there
+
+Supply Chain Tracking (Future):
+  • Extend barcode tracking beyond finished goods: track pallets of seats through
+    warehouse, shipping, delivery
+  • Integrate with shipping partners' systems: "This pallet (from Motion barcode)
+    is en route to customer X"
+  • Full traceability: raw materials in → production → finished goods → customer
+    site
+
+Predictive Maintenance via Analytics:
+  • Motion collects jig/pallet history (uptime, failures, maintenance events)
+  • Integrate with analytics platform (Tableau, Power BI, or custom ML) → trend
+    forecasting
+  • Use case: "In the past 60 days, JIG-xxx fails every 9 days. Recommend
+    preventive replacement on Day 8"
+
+
+================================================================================
+PART 2: SCREEN PURPOSE & FUNCTION (7 Screens)
+================================================================================
+
+S-01: SPLASH SCREEN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Purpose:
+  Establish brand presence and load-time experience. First impression of Motion
+  app — builds confidence that user launched the correct, official application
+  (not a phishing or test app).
+
+Function:
+  • Displays Motion logo, app name, optional tagline ("Smart Asset Tracking")
+  • Shows a loading animation or progress indicator (app initializing database
+    connection, checking RFID reader status, verifying token)
+  • Auto-advances to Login after 2–3 seconds on first launch; skips on subsequent
+    launches (token cached)
+  • Sets the visual tone: industrial, professional, efficient (navy-and-gold
+    brand palette signals industrial control room, not consumer app)
+
+
+S-02: LOGIN SCREEN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Purpose:
+  Authenticate users before system access. Ensures only authorized 4-team members
+  (MES, Maintenance, PPIC, PD) can enter. Differentiates user identity for audit
+  logging and notification routing.
+
+Function:
+  • Collects User ID (e.g., MES-001, MAINT-05) + Password
+  • Validates credentials against local database or corporate directory
+  • Issues JWT token valid for session (stored in localStorage)
+  • Optional "Remember Me" for shared tablets (avoid re-entry for frequent users)
+  • Sets identity context: subsequent screens know "this is Maintenance Team" or
+    "this is PPIC" (used for audit trail, Slack notifications, report exports)
+  • Bridge between physical plant (where user works) and digital system (app on
+    phone)
+
+
+S-03: DASHBOARD (Main Screen)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Purpose:
+  Central entry point — answer the core question "Is production normal right now?"
+  in under 3 seconds. This is where all 4 teams START every session. MES wants
+  flow status, Maintenance wants equipment health, PPIC wants throughput, PD wants
+  system overview — all land here first.
+
+Function:
+  • Shows 4-tile KPI summary: Total Jigs, Total Pallets, Jigs in Maintenance,
+    Pallets in Maintenance (immediately tells operator: "Everything nominal" or
+    "Alert: 2 jigs overdue")
+  • Lists all jigs/pallets as Status Cards, auto-sorted by urgency (Offline first,
+    then Attention Required, then Active) — urgent items always top-left (where
+    eye naturally falls on mobile screen)
+  • Each card shows asset ID, current station/location, status badge (color:
+    green/amber/red), sequence, last-detected time
+  • Optional "Recent Alerts" panel summarizing last 3–5 unresolved issues
+  • Bottom navigation tabs: Dashboard (active) · Barcode Scan · Manage RFID ·
+    Alerts · Analytics
+  • Landing point for all flow: from here, user drills into detail (tap card → see
+    history), scans barcode (tap nav → S-04), checks alerts (tap nav → S-06), etc.
+
+
+S-04: BARCODE SCAN / TRACKING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Purpose:
+  Bridge between production line and outbound/inventory: track finished seats
+  through barcode. Operator scans seat barcode (or manually searches by sequence)
+  to confirm: "This seat, this lot, this product code, at this time." Primary
+  users: PPIC (tracking) and PD (analytics seed data).
+
+Function:
+  • Provides barcode scan interface: camera input (if device supports) or manual
+    barcode/sequence entry
+  • Once scanned: displays barcode info card (sequence, product code, part number,
+    lot number, datetime)
+  • Read-only display: app is NOT a barcode input tool (that's the gun scanner on
+    line) — it's a lookup/verification tool
+  • Optional: show full barcode-scan history from this session (previous seats
+    scanned this shift)
+  • Use case flow: PPIC operator completes production run → uses Motion barcode
+    screen to cross-check 3–5 random seats' barcodes → confirms batch integrity
+    → approves shipment
+
+
+S-05: MANAGE RFID
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Purpose:
+  Represent the bridge between physical RFID tags and digital identities. This is
+  where system acknowledges: "We have a jig with this RFID ID; we're calling it
+  JIG-0847; here's its asset info." Enables creation, updating, and deletion of
+  tag-to-asset mappings.
+
+Function:
+  • Lists all registered RFID tags (both jigs and pallets): RFID ID, Asset Type
+    (Jig/Pallet), Custom Name (optional), Current Status badge
+  • "Add Tag" button → form to register new RFID (when new jig/pallet acquired):
+    enter RFID ID, select type, assign name
+  • Edit tag → update asset info (name, type, or retire tag)
+  • Delete tag → deregister RFID (when asset scrapped or transferred out)
+  • Filter tabs: All · Jigs · Pallets (quick scan for specific asset type)
+  • Action: manages the "registry" — ensures every RFID tag detected by readers
+    has a corresponding database record, so alerts/dashboards have human-readable
+    asset names
+
+
+S-06: ALERTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Purpose:
+  Escalation channel — surface all unresolved issues (production delays,
+  maintenance overdue, RFID offline, etc.) in one place. Users don't have to
+  hunt for problems; Alerts brings them to the foreground.
+
+Function:
+  • Scrollable list of active alerts, sorted by severity (Offline red first, then
+    Attention Required amber)
+  • Each alert shows: icon (color-coded) · title (e.g., "JIG-0847 Overdue for
+    Maintenance") · timestamp (when alert fired) · action button (Dismiss, View
+    Detail, Acknowledge)
+  • Filter tabs: All · Attention Required · Offline (quick filter for severity
+    level)
+  • Empty state: "No Alerts — All systems running normally" (confidence signal)
+  • Use case: Maintenance Team opens Alerts → sees "PLT-456 RFID Offline for 30
+    min" → investigates whether reader failed or pallet was removed from conveyor
+    → resolves
+
+
+S-07: ANALYTICS (Optional but Recommended)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Purpose:
+  Aggregate historical patterns for optimization. PD team + leadership use this to
+  answer: "What's our reliability? What jigs/pallets fail most? What's the
+  bottleneck?" Long-term planning and system improvement.
+
+Function:
+  • Main visualization: bar or line chart showing alert frequency over time (last
+    7 days, 30 days, 90 days — date range picker)
+  • Breakdown by alert type: Offline alerts vs. Attention Required (shows severity
+    distribution)
+  • Optional breakdown by asset type: Jigs vs. Pallets (reveals which asset class
+    is more troublesome)
+  • Summary KPIs: Total Alerts (period), Average Alerts per Day, Offline Time
+    (hours)
+  • Optional: detailed data table (Period · Alert Count · MTBF · Avg Resolution
+    Time) — exportable for reports
+  • Use case: PD reviews Analytics weekly → spots that Jig-xxx fails every 9 days
+    → recommends predictive maintenance or upgrade
+
+
+================================================================================
+CONCLUSION
+================================================================================
+
+Motion is a PURPOSE-BUILT, PERVASIVE-COMPUTING SYSTEM that makes production flow
+transparent. RFID ambient sensing eliminates manual tracking; the mobile app brings
+that data to every team member's phone.
+
+The 7 screens work as a cohesive flow:
+  1. Splash + Login → authenticate user
+  2. Dashboard → rapid health check (the starting point for every session)
+  3. From Dashboard: branch to Barcode Scan (track outbound), Manage RFID
+     (registry), Alerts (escalation), or Analytics (trends)
+  4. Each screen serves a specific decision point in the operator's workflow
+
+By making the invisible (RFID data) visible (mobile app), Motion enables
+predictive decisions (Maintenance teams prevent failures, PPIC plans with
+confidence, PD optimizes operations).
+
+================================================================================
